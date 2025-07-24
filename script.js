@@ -22,7 +22,7 @@ function displayScore(PlayerChoice,ComputerChoice){
     if(ComputerChoice===PlayerChoice){
         computerWins++;
         playerWins++;
-        displayWinnerScore.textContent=`Draw ${currentRound} \n
+        displayWinnerScore.textContent=`Draw, Round:${currentRound} \n
             Total Score of Computer = ${computerWins}, Total Score of Player = ${playerWins}`
     }
     else{
