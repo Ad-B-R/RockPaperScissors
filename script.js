@@ -1,42 +1,74 @@
-console.log("Hello World");
-
+const MAX_ROUND = 5;
 let getComputerChoice = function getRandInt(a,b){
     return Math.floor(Math.random()*3);
 };
-let getPlayerChoice = function() {
-    let x = prompt("Enter 0 for Rock, 1 for Paper, 2 for Scissors");
-    return x;
+
+const choiceMap = {0:"Rock",1:"Paper",2:"Scissors"};
+let playerChoice;
+let computerChoice;
+let currentRound = 1;
+
+let computerWins = 0;
+let playerWins = 0;
+function displayOptions(player,computer){
+    let playerChoiceText = document.getElementById("playersChoice");
+    let computerChoiceText = document.getElementById("computersChoice");
+    playerChoiceText.textContent = choiceMap[player];
+    computerChoiceText.textContent = choiceMap[computer];
 }
 
-let ComputerWins = 0;
-let PlayerWins = 0;
-function playGame(){
-    for(let i = 0;i<5;i++){
-        let ComputerChoice = getComputerChoice(0,2);
-        let PlayerChoice = getPlayerChoice();
-        if(ComputerChoice===PlayerChoice) console.log("Draw");
-        else{
-            if(ComputerChoice-PlayerChoice===1){
-                console.log("Player loses");
-                ComputerWins++;
-            }
-            else if(ComputerChoice-PlayerChoice===-1){
-                console.log("Computer loses");
-                PlayerWins++;
-            }
-            else if(ComputerChoice==0&&PlayerChoice==2){ 
-                console.log("Player lose");
-                ComputerWins++;
-            }
-            else if(ComputerChoice==2&&PlayerChoice==0){ 
-                console.log("Computer lose");
-                PlayerWins++;
-            }
+function displayScore(PlayerChoice,ComputerChoice){
+    displayWinnerScore = document.getElementById("roundWinner");
+    if(ComputerChoice===PlayerChoice){
+        computerWins++;
+        playerWins++;
+        displayWinnerScore.textContent=`Draw ${currentRound} \n
+            Total Score of Computer = ${computerWins}, Total Score of Player = ${playerWins}`
+    }
+    else{
+        if((ComputerChoice-PlayerChoice===1)||(ComputerChoice==0&&PlayerChoice==2)){
+            computerWins++;
+            displayWinnerScore.textContent=`Computer Wins Round ${currentRound} \n
+            Total Score of Computer = ${computerWins}, Total Score of Player = ${playerWins}`
+        }
+        else if((ComputerChoice-PlayerChoice===-1)||(ComputerChoice==2&&PlayerChoice==0)){
+            playerWins++;
+            displayWinnerScore.textContent=`Player Wins Round ${currentRound} \n
+            Total Score of Computer = ${computerWins}, Total Score of Player = ${playerWins}`
         }
     }
-    let message = function(){(PlayerWins>ComputerWins)?alert("Player wins"):
-        (ComputerWins>PlayerWins)?alert("Computer Wins"):alert("Draw")}
-    message();
 }
 
-playGame();
+function Game() {
+    const options = document.getElementById("optionsList");
+    options.addEventListener('click',function(event){
+    if(currentRound<=MAX_ROUND){
+        // Player Choice
+        const clickedOption = event.target.closest('.Options');
+        const numericValue = clickedOption.dataset.val;
+        playerChoice = parseInt(numericValue,10);
+
+        computerChoice = getComputerChoice();
+        
+        displayOptions(playerChoice,computerChoice);
+        displayScore(playerChoice,computerChoice)
+        currentRound++;
+    }
+    else{
+        gameMenu = document.getElementById("game");
+        winnerMenu = document.getElementById("winnerPage");
+        winnerMenu.classList.remove('notvisible');
+        winnerMenu.classList.add('visible');
+        gameMenu.classList.remove('visible');
+        gameMenu.classList.add('notvisible');
+
+        whichPlayerWon = document.getElementById("winnerPageDisplay");
+        if(playerWins==computerWins) whichPlayerWon.textContent = "Draw";
+        else whichPlayerWon.textContent = (playerWins>computerWins)?"Player Wins":"Computer Wins";
+    }
+    })
+}
+Game();
+
+// for(let i = 0;i<5;i++){ 
+// }

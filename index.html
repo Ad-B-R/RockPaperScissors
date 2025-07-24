@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>RockPaperScissors</title>
+    <link href="./styles.css" rel="stylesheet">
 </head>
 <body>
+    <h1 id="Heading">Rock Paper Scissors</h1>
+    <div id="game" class="visible">
+        <h1 id="headingGame">Choose an option</h1>
+        <div class="container" id="optionsList">
+            <div class="items">
+                <img src="images/Rock.jpg" class = "Options" width ="300" height="300" data-val="0">
+            </div>
+            <div class="items">
+                <img src="images/Paper.png" class="Options" width="300" height="300" data-val="1">
+            </div>
+            <div class="items">
+                <img src="images/Scissors.png" class="Options" width="300" height="300" data-val="2">
+            </div>
+        </div>
+        <h2>You Choose: <span id="playersChoice"></span></h2>
+        <h2>Computer Choose: <span id="computersChoice"></span></h2>
+        <h2 id="roundWinner"></h2>
+    </div>
+    <div id="winnerPage" class="notvisible">
+        <h1>The winner: <span id="winnerPageDisplay"></span></h1>
+    </div>
     <script src="./script.js"></script>
-</body>
-</html>
+    </body>
+    </html>
